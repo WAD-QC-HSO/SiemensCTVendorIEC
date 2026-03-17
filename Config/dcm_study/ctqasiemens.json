@@ -1,0 +1,18 @@
+{
+    "actions": {
+        "aqdatetime": {
+            "filters": {},
+            "params": {}
+        },
+        "analysis": {
+            "filters": {},
+            "params": {}
+        }
+    },
+    "cfgformat": "20180910",
+    "comments": {
+        "author": "Erlend Andersen",
+        "description": "CT analysis of dual source Siemens vendor phantom",
+        "version": "20220601"
+    }
+}

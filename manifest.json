@@ -1,0 +1,20 @@
+{
+    "info": {
+        "dbversion": "20200713",
+        "magic": "wad-qc-factory"
+
+    },
+    "module": {
+        "description": "CT Siemens",
+        "executable" : "ctqasiemens_wrapper.py",
+        "name": "CT Siemens Dual Daily",
+        "code": "python",
+        "dependencies": [
+            "numpy",
+            "lmfit",
+            "scipy",
+            "skimage",
+            "pydicom"
+        ]
+    }
+}
