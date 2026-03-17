@@ -27,7 +27,7 @@ def generate():
     dest = os.path.join(cdir, 'packages', name)
 
     shutil.copy('analysis.py', dest)
-    shutil.copy('ctqasiemens_wrapper.py', dest)
+    shutil.copy('wrapper.py', dest)
     shutil.copy('ctseries.py', dest)
     shutil.copy('ctstudy.py', dest)
     shutil.copy('manifest.json', dest)
