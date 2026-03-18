@@ -31,7 +31,7 @@ class CTSeries(object):
     _mode_names_ = ["Mode", "kV", "Collimation", "Filter", "Tube", "Comment"]
 
     def __init__(self, dc_paths: list):
-        self._dcs = dc_paths
+        self._dcs = self.sortByDicomInstance(dc_paths)
         self._valid = False
         self._mode = list()
         if len(self._dcs) > 0:
@@ -47,6 +47,25 @@ class CTSeries(object):
     @property
     def mode(self):
         return self._mode
+
+    @staticmethod
+    def sortByDicomInstance(dcpaths: list):
+        instance_tag = (0x20, 0x13)
+        data = [
+            (
+                path,
+                pydicom.dcmread(
+                    path,
+                    specific_tags=[
+                        instance_tag,
+                    ],
+                ),
+            )
+            for path in dcpaths
+        ]
+
+        data.sort(key=lambda x: x[1][instance_tag].value)
+        return list([p for p, _ in data])
 
     def findModes(self):
         image_comment_tag = (0x20, 0x4000)

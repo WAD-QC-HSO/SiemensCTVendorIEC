@@ -6,12 +6,11 @@
     },
     "module": {
         "description": "CT Siemens",
-        "executable" : "ctqasiemens_wrapper.py",
-        "name": "CT Siemens Dual Daily",
+        "executable" : "wrapper.py",
+        "name": "CT Siemens IEC Analysis",
         "code": "python",
         "dependencies": [
-            "numpy",
-            "lmfit",
+            "numpy",            
             "scipy",
             "skimage",
             "pydicom"

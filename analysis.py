@@ -151,7 +151,7 @@ def mtfWorker(arr, px):
         elif y[0] >= 0.1 and y[1] <= 0.1:
             mtf10 = interp(y[1], y[0], x[1], x[0], 0.1)
         i += 1
-    return mtf50, mtf10
+    return mtf50 * 10, mtf10 * 10
 
 
 def analyseMTF(series, result_object):
@@ -205,7 +205,6 @@ def analyseNoise(series, result_object):
         for ind, arr in enumerate(serie.getArrays()):
             key = label + "slice {}".format(ind + 1)
             if arr.min() < -500:
-                print(key)
                 if key not in results:
                     results[key] = list()
                 results[key].append((arr, serie.getPixelSpacing(ind)[0]))
@@ -240,7 +239,7 @@ def analyseSlice(series, result_object):
             spacing = serie.getPixelSpacing(ind)[0]
 
             ## Smooth image in direction normal to slice alu ramp
-            gauss = skimage.filters.gaussian(arr, sigma=(4, 1), truncate=8.0)
+            gauss = skimage.filters.gaussian(arr, sigma=(4, 0), truncate=8.0)
             background = 100
             thres = background + (gauss.max() - background) / 2
 
@@ -261,14 +260,27 @@ def analyseSlice(series, result_object):
         result_object.addFloat(key, val)
 
 
+def writeMetadata(study, results):
+    tags = {
+        "Software version": (0x18, 0x1020),
+        "Device serial number": (0x18, 0x1000),
+        "Study description": (0x8, 0x1030),
+        "Station name": (0x8, 0x1010),
+    }
+    for s in study.getSeries():
+        for name, tag in tags.items():
+            val = s.getDicomTag(tag)
+            if val is not None:
+                results.addString(name, str(val))
+        return
+
+
 def analyse(data, results, config):
 
     study = ctstudy.CTStudy(data)
+    writeMetadata(study, results)
+
     series = study.getSeries()
-
-    for s in series:
-        print(s.mode)
-
     analyseSlice(series, results)
     analyseNoise(series, results)
     analyseMTF(series, results)

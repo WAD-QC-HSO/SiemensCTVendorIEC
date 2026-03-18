@@ -12,8 +12,8 @@ import fix_line_endings
 
 
 def create_outdir(name):
-    parent = os.path.abspath('.')
-    dirs = os.path.join(parent, 'packages', name, "Config", "dcm_study", 'meta')
+    parent = os.path.abspath(".")
+    dirs = os.path.join(parent, "packages", name, "Config", "dcm_study", "meta")
     try:
         os.makedirs(dirs)
     except FileExistsError:
@@ -21,42 +21,50 @@ def create_outdir(name):
 
 
 def generate():
-    name = "ctqasiemens"
-    cdir = os.path.abspath('.')
+    name = "ctqaiecsiemens"
+    cdir = os.path.abspath(".")
     create_outdir(name)
-    dest = os.path.join(cdir, 'packages', name)
+    dest = os.path.join(cdir, "packages", name)
 
-    shutil.copy('analysis.py', dest)
-    shutil.copy('wrapper.py', dest)
-    shutil.copy('ctseries.py', dest)
-    shutil.copy('ctstudy.py', dest)
-    shutil.copy('manifest.json', dest)
+    shutil.copy("analysis.py", dest)
+    shutil.copy("wrapper.py", dest)
+    shutil.copy("ctseries.py", dest)
+    shutil.copy("ctstudy.py", dest)
+    shutil.copy("manifest.json", dest)
 
-    if not os.path.exists(os.path.join(cdir, 'Config', 'dcm_study', 'meta', 'ctqasiemens.json')):
-        shutil.copy(os.path.join(cdir, 'Config', 'dcm_study', 'meta', 'ctqasiemens_auto.json'), os.path.join(dest, 'Config', 'dcm_study', 'meta', 'ctqasiemens.json'))
+    if not os.path.exists(
+        os.path.join(cdir, "Config", "dcm_study", "meta", "ctqaiecsiemens.json")
+    ):
+        shutil.copy(
+            os.path.join(
+                cdir, "Config", "dcm_study", "meta", "ctqaiecsiemens_auto.json"
+            ),
+            os.path.join(dest, "Config", "dcm_study", "meta", "ctqaiecsiemens.json"),
+        )
     else:
-        shutil.copy(os.path.join(cdir, 'Config', 'dcm_study', 'meta', 'ctqasiemens.json'), os.path.join(dest, 'Config', 'dcm_study', 'meta'))
-    shutil.copy(os.path.join(cdir, 'Config', 'dcm_study', 'ctqasiemens.json'), os.path.join(dest, 'Config', 'dcm_study', 'ctqasiemens.json'))
-
+        shutil.copy(
+            os.path.join(cdir, "Config", "dcm_study", "meta", "ctqaiecsiemens.json"),
+            os.path.join(dest, "Config", "dcm_study", "meta"),
+        )
+    shutil.copy(
+        os.path.join(cdir, "Config", "dcm_study", "ctqaiecsiemens.json"),
+        os.path.join(dest, "Config", "dcm_study", "ctqaiecsiemens.json"),
+    )
 
     fix_line_endings.fix_all(dest)
 
-
-    zip_dest = os.path.join(cdir, 'packages', 'modules_zip')
+    zip_dest = os.path.join(cdir, "packages", "modules_zip")
     try:
         os.makedirs(zip_dest)
     except FileExistsError:
         pass
-    manifest_path = os.path.join(dest, 'manifest.json')
-    make_factory_zip(manifest_path, 'zip_module', repo_info={}, outdir=zip_dest)
+    manifest_path = os.path.join(dest, "manifest.json")
+    make_factory_zip(manifest_path, "zip_module", repo_info={}, outdir=zip_dest)
 
 
-
-if __name__=='__main__':
-
+if __name__ == "__main__":
 
     generate()
-
 
     # manifest = os.path.abspath('manifest.json')
     # parentdir = os.path.abspath(os.path.join(manifest, '..', '..'))
@@ -65,6 +73,5 @@ if __name__=='__main__':
     #     os.mkdir(dest)
 
     # fix_line_endings.fix_all()
-
 
     # make_factory_zip(manifest, 'zip_module', repo_info={}, outdir=dest)

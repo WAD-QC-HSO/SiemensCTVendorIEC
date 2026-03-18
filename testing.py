@@ -112,5 +112,5 @@ if __name__ == "__main__":
 
     conf = results.getConfig()
     if writeConfig:
-        with open("./Config/dcm_study/meta/ctqasiemens_auto.json", "w") as f:
+        with open("./Config/dcm_study/meta/ctqaiecsiemens_auto.json", "w") as f:
             f.write(conf)
